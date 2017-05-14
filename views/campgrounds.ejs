@@ -1,0 +1,30 @@
+<% include partials/header %>
+
+
+   <div class="container">
+      <header class="jumbotron">
+         <div class="container">
+            <h1>Welcome to campgrounds</h1>
+            <a class="btn btn-success" href="/campgrounds/new">Add new campground</a>
+         </div>
+      </header>
+
+   <div class="row">
+         <% for(let index = 0 ; index < campgrounds.length ; index++){ %>
+         <div class="col-3">
+            <h4>
+               <%= campgrounds[index].name %> 
+            </h4>
+            <img src="<%=campgrounds[index].image%>" alt="<%= campgrounds[index].name %>">
+         </div>
+         <% } %>      
+   </div>
+
+      <footer class="footer">
+         <p>Copyright 2016 - <%= new Date().getFullYear() %></p>
+      </footer>
+   </div>
+   <% include partials/footer %>
+
+  
+   
