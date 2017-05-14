@@ -1,9 +1,10 @@
 /* eslint-env node */
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
-app.set('view engine', 'ejs')
-
+app.use(bodyParser.urlencoded({extended: true}));
+app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
@@ -13,12 +14,17 @@ app.get('/', (req, res) => {
    })
 })
 
-app.get('/about/:var', (req, res) => {
+app.get('/about', (req, res) => {
    res.render('about', {
-      pageTitle: req.params.var,
+      pageTitle: 'About Page',
       title: 'tothih'
    })
 })
+
+app.get('*', (req, res) => {
+   res.status(404).send('page not found')
+})
+
 app.listen(3000, () => {
    console.log('app listening on port 3000!')
 })
