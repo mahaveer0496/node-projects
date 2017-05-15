@@ -6,9 +6,7 @@ const bodyParser = require('body-parser');
 const Blog = require('./blogModel');
 
 
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/public`));
 
@@ -27,16 +25,17 @@ app.get('/blogs', (req, res) => {
 app.get('/blogs/new', (req, res) => {
   res.render('new');
 });
+
 app.post('/blogs', (req, res) => {
-  console.log(req.body);
   const { title, body, image } = req.body;
-  console.log(` title ${title} - body ${body} - image ${image}`);
-  Blog.create({
-    title,
-    image,
-    body,
-  }).then(() => {
+  Blog.create({ title, image, body }).then(() => {
     res.redirect('/blogs');
+  });
+});
+app.get('/blogs/:id', (req, res) => {
+  const { id } = req.params;
+  Blog.findById(id).then((blog) => {
+    res.render('show', { blog });
   });
 });
 app.get('*', (req, res) => {
