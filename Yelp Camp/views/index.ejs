@@ -10,7 +10,8 @@
       <div class="row">
       <% for(let index = 0 ; index < campgrounds.length ; index++){ %>
          <div class="col-4">
-            <p class="lead"><%= campgrounds[index].name %> - <strong> <%= campgrounds[index].image %> </strong></p>         
+            <p class="lead"><%= campgrounds[index].name %> - <strong> <%= campgrounds[index].image %> </strong></p>
+            <p><a class="btn btn-primary" href="/campgrounds/<%= campgrounds[index]._id %>">More Info</a></p>         
          </div>
       <% } %>
       </div>
