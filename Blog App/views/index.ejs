@@ -1,5 +1,13 @@
 <% include partials/header %>
   <h1 class="text-center">Welcome to the Blog App</h1>
+  <% blogs.forEach((blog,index)=>{ %>
+      <div class="container">
+        <h2><%= blog.title %></h2>
+        <img src="#" alt="<%= blog.image %>">
+        <p class="lead"><%= blog.body %></p>
+        <p><%= blog.created %></p>
+      </div>
+  <% }) %>
 <% include partials/footer %>
 
   
