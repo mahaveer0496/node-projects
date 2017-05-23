@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Campground = require('./models/campground');
+const Comment = require('./models/comment');
 const seedDB = require('./seeds');
 
 seedDB();
@@ -52,13 +53,15 @@ app.get('/campgrounds/new', (req, res) => {
 
 app.get('/campgrounds/:id', (req, res) => {
   const { id } = req.params;
-  Campground.findById(id).then((campground) => {
-    res.render('show', { campground });
-  }, (err) => {
-    console.log(err);
+  Campground.findById(id).populate('comments').exec((err, campground) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('show', { campground });
+    }
   });
 });
-
+ 
 app.get('*', (req, res) => {
   res.status(404).send('page not found');
 });

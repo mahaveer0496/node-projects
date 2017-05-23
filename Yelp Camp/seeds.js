@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const Comment = require('./models/comment');
+
 const data = [
   {
     name: 'Clouds rest',
@@ -23,7 +24,15 @@ function seedDB() {
   Campground.remove().then(() => {
     data.map((val) => {
       Campground.create(val).then((campground) => {
-        console.log(campground);
+        console.log('add campground');
+        Comment.create({
+          text: 'This place is awesome',
+          author: 'Homer Simpsoon',
+        }).then((comment) => {
+          campground.comments.push(comment);
+          campground.save();
+          console.log('added comment');
+        });
       });
     });
   }, (err) => {
