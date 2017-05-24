@@ -1,8 +1,8 @@
 {
-  "name": "web-server",
+  "name": "authentication",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "cd /program files/mongodb/server/3.4/bin/ && mongod.exe --dbpath \"C:\\Users\\mahav\\mongo-data\"",
     "test": "cd /program files/mongodb/server/3.4/bin && mongo.exe",
@@ -22,7 +22,8 @@
     "mongoose": "^4.9.7",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
