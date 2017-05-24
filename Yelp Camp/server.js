@@ -55,7 +55,7 @@ app.get('/campgrounds/:id', (req, res) => {
   const { id } = req.params;
   Campground.findById(id).populate('comments').exec((err, campground) => {
     if (err) {
-      console.log(err);
+      console.log("error");
     } else {
       res.render('show', { campground });
     }
