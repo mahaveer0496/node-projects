@@ -1,0 +1,16 @@
+<% include partials/header %>
+<div class="container">
+<h1 class="text-center">Register</h1>
+   <div class="row">
+      <div class="col-6 offset-3">
+      <form action="/register" method="POST">
+         <input class="form-control" type="text" name="username" placeholder="username">
+         <input class="form-control" type="text" name="password" placeholder="password">         
+         <input class="btn btn-outline-primary "type="submit">
+      </form>
+      <a href="/campgrounds">Go back</a>
+      </div>
+   </div>
+</div>
+
+<% include partials/footer %>
