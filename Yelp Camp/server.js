@@ -30,6 +30,15 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  res.locals.username = req.user;
+  next();
+});
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+};
 
 app.get('/', (req, res) => {
   res.render('landing', {
@@ -37,11 +46,6 @@ app.get('/', (req, res) => {
     welcomeMessage: 'Welcome to our Website',
   });
 });
-
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
-};
 
 app.get('/campgrounds', (req, res) => {
   Campground.find({}).then((campgrounds) => {
