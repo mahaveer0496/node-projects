@@ -21,7 +21,9 @@ app.use(require('express-session')({
 }));
 
 app.use(express.static(`${__dirname}/public`));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -67,12 +69,16 @@ app.get('/campgrounds/new', (req, res) => {
 });
 
 app.get('/campgrounds/:id', (req, res) => {
-  const { id } = req.params;
+  const {
+    id,
+  } = req.params;
   Campground.findById(id).populate('comments').exec((err, campground) => {
     if (err) {
       console.log('error');
     } else {
-      res.render('show', { campground });
+      res.render('show', {
+        campground,
+      });
     }
   });
 });
@@ -82,8 +88,13 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  const { username, password } = req.body;
-  const user = new User({ username });
+  const {
+    username,
+    password,
+  } = req.body;
+  const user = new User({
+    username,
+  });
   User.register(user, password, (err, user) => {
     if (err) {
       console.log(`error ${err}`);
@@ -92,6 +103,18 @@ app.post('/register', (req, res) => {
     passport.authenticate('local')(req, res, () => res.redirect('/campgrounds'));
   });
 });
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/campgrounds',
+  failureRedirect: '/login',
+}), (req, res) => {
+  console.log('what?');
+});
+
 app.get('*', (req, res) => {
   res.status(404).send('page not found');
 });
