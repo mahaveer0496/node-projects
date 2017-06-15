@@ -1,18 +1,18 @@
 const express = require('express');
-const app = express();
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
+const app = express();
 const PORT = process.env.PORT || 3000;
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost:27017/voting_app');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
-app.get('/', (req, res) => {
-  res.send('Welcome to hom page');
-});
-
-app.get('*', (req, res) => {
-  res.status(404).send('page not found');
+app.get('/api', (req, res) => {
+  res.json({ "hi": "bye" });
 });
 
 app.listen(PORT, () => {
-  console.log('app listening on port PORT');
+  console.log(`app listening on port ${PORT}`);
 });
