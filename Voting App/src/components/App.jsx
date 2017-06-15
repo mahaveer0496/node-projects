@@ -18,6 +18,7 @@ class App extends Component {
     });
   }
   handleSubmit(event) {
+    event.preventDefault();
   }
   render() {
     const { polls } = this.state;
@@ -36,19 +37,19 @@ class App extends Component {
             ref={(input) => { this.title = input; }}
             placeholder="Enter title for poll"
           />
-          {/* {polls.map(poll => (
+           {/*{polls.map(poll => (
             <select key={poll._id}>
-              {poll.topics.map((topic, index) => <option key={index} value={topic}>{topic}</option>)}
+              {poll.topics.map((topic, index) => <option key={index} value={topic.title}>{topic.title}</option>)}
             </select>
             ))}*/}
+         {polls.map(poll =>
+            (<PollField
+              id={poll._id}
+              topics={poll.topics}
+            />)
+          )}
           <input type="submit" />
         </form>
-        {polls.map(poll =>
-          (<PollField
-            key={poll._id}
-            topics={poll.topics}
-          />)
-        )}
 
       </div>
     );
