@@ -37,16 +37,11 @@ class App extends Component {
             ref={(input) => { this.title = input; }}
             placeholder="Enter title for poll"
           />
-           {/*{polls.map(poll => (
-            <select key={poll._id}>
-              {poll.topics.map((topic, index) => <option key={index} value={topic.title}>{topic.title}</option>)}
-            </select>
-            ))}*/}
-         {polls.map(poll =>
+          {polls.map((poll, index) =>
             (<PollField
-              id={poll._id}
+              key={index}
               topics={poll.topics}
-            />)
+            />),
           )}
           <input type="submit" />
         </form>

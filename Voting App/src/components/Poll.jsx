@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
 
-const PollField = ({ topics, id }) => (
-  <select key={id}>
+const PollField = ({ topics }) => (
+  <select>
     {topics.map(topic => (
       <option
-        key={shortid.generate() + id}
+        key={shortid.generate()}
         value={topic.title}
       >
         {topic.title}
