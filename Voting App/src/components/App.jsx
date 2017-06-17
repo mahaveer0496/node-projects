@@ -1,54 +1,40 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import PollField from './Poll';
+import { Switch, Route } from 'react-router-dom';
+import PollTitlesAndItsForm from './PollAndItsForm';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      polls: [],
-    };
-    this.pollTitle = null;
-    this.title = null;
-    axios.get('/api').then((res) => {
-      this.setState({
-        polls: res.data,
-      });
-    });
-  }
-  handleSubmit(event) {
-    event.preventDefault();
-  }
+class App extends Component {  
   render() {
-    const { polls } = this.state;
+    // const { polls } = this.state;
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="pollTitle"
-            ref={(input) => { this.pollTitle = input; }}
-            placeholder="Enter poll name"
-          />
-          <input
-            type="text"
-            name="title"
-            ref={(input) => { this.title = input; }}
-            placeholder="Enter title for poll"
-          />
-          {polls.map((poll, index) =>
-            (<PollField
-              key={index}
-              topics={poll.topics}
-            />),
-          )}
-          <input type="submit" />
-        </form>
-
-      </div>
+      <Switch>
+        <Route path="/" component={PollTitlesAndItsForm} />
+      </Switch>
     );
   }
 }
 
 export default App;
+
+
+// constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     polls: [],
+  //   };
+  //   this.pollTitle = null;
+  //   this.topicTitle = null;
+  //   axios.get('http://localhost:3000/api').then((res) => {
+  //     this.setState({
+  //       polls: res.data,
+  //     });
+  //   });
+  // }
+
+
+  // increaseVotes(pollId, topicId) {
+  //   axios.post(`http://localhost:3000/api/${pollId}/${topicId}`).then((res) => {
+  //     this.setState({
+  //       polls: res.data,
+  //     });
+  //   });
+  // }

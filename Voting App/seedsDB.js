@@ -5,12 +5,6 @@ const polls = [{
   topics: [{
     title: 'topic 1 for first poll',
     votes: 2,
-  }, {
-    title: 'topic 2 for first poll',
-    votes: 0,
-  }, {
-    title: 'topic 3 for first poll',
-    votes: 12,
   }],
 }, {
   poll: 'this is second poll',
