@@ -10,6 +10,7 @@ const AddPollForm = ({ handleUpdate }) => {
     }).then((res) => {
       handleUpdate(res.data);
     });
+    pollTitle.value = '';
   };
   return (
     <form onSubmit={handleSubmit}>

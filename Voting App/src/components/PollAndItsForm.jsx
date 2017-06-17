@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AddPollForm from './AddPollForm';
-import PollTopics from './PollTopics';
+import PollTitles from './PollTitles';
 
 class PollAndItsForm extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class PollAndItsForm extends Component {
     return (
       <div>
         <AddPollForm handleUpdate={this.handleUpdate} />
-        <PollTopics polls={polls} />
+        <PollTitles polls={polls} />
       </div>
     );
   }

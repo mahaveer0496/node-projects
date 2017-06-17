@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import PollTitlesAndItsForm from './PollAndItsForm';
+import PollAndItsForm from './PollAndItsForm';
+import TopicsAndItsForm from './TopicsAndItsForm';
 
-class App extends Component {  
+class App extends Component {
   render() {
     // const { polls } = this.state;
     return (
       <Switch>
-        <Route path="/" component={PollTitlesAndItsForm} />
+        <Route exact path="/" component={PollAndItsForm} />
+        <Route path="/poll" component={TopicsAndItsForm} />
       </Switch>
     );
   }

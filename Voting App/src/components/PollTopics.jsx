@@ -1,14 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import shortid from 'shortid';
 import { Link } from 'react-router-dom';
 
-const PollTopics = ({polls}) => {
-  return (
-    <div>
-      {polls.map(poll => (
-        <p key={poll._id}>{poll.poll} <Link to={`/${poll._id}`} >Go here!</Link></p>
-      ))}
-    </div>
-  );
-};
+const PollTopics = () => (
+  <div>this is PollTopics
+    <Link to="/">Go back</Link>
+  </div>
+)
+
+// const PollTopics = ({ topics, increaseVotes, pollId }) => {
+//   return (
+//     <div>
+//       {topics.map(topic => (
+//         <div key={topic._id}>
+//           <span>{topic.title}</span>
+//           <progress value={topic.votes} max={50} key={topic._id} />
+//           <button onClick={() => { increaseVotes(pollId, topic._id); }}>Vote for this!</button>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+
+// PollTopics.propTypes = {
+//   topics: PropTypes.arrayOf(PropTypes.shape({
+//     title: PropTypes.string.isRequired,
+//     votes: PropTypes.number.isRequired,
+//   })).isRequired,
+//   increaseVotes: PropTypes.func.isRequired,
+// };
+
 
 export default PollTopics;
+
