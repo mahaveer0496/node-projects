@@ -1,4 +1,4 @@
-const Poll = require('./schema');
+const Poll = require('./models/PollModel');
 
 const polls = [{
   poll: 'this is first poll',

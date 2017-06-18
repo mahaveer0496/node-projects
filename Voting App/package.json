@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd /program files/mongodb/server/3.4/bin/ && mongod.exe --dbpath \"C:\\Users\\mahav\\mongo-data\"",
     "test": "cd /program files/mongodb/server/3.4/bin && mongo.exe",
-    "server": "nodemon server.js",
+    "server": "nodemon server/server.js",
     "dev": "webpack-dev-server --content-base dist"
   },
   "keywords": [],
