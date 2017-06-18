@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
-const AddTopicForm = () => {
+const AddTopicForm = ({ pollId, addNewTopic }) => {
   let topicTitle = null;
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(topicTitle);
+    console.log(pollId);
+    addNewTopic(pollId, topicTitle.value);
     topicTitle.value = '';
   };
   return (
@@ -15,7 +17,7 @@ const AddTopicForm = () => {
           type="text"
           name="topicTitle"
           ref={(input) => { topicTitle = input; }}
-          placeholder="Enter topic"
+          placeholder="Add new topic"
         />
         <input type="submit" />
       </form>
