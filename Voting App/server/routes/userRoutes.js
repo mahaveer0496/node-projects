@@ -4,25 +4,26 @@ const User = require('./../models/UserModel');
 
 const userRoutes = express.Router();
 
-userRoutes.route('/register')
-  .post((req, res, next) => {
-    const { email, password } = req.body;
-    User.create({ email, password }).then((user) => {
-      passport.authenticate('local', (err, user, info) => {
-        if (err) { return next(err); }
-        if (!user) { return res.redirect('/'); }
-        req.logIn(user, (err) => {
-          if (err) { return next(err); }
-          return res.redirect('/secret');
-        });
-      })(req, res, next);
-    });
-  });
+// userRoutes.route('/register')
+//   .post((req, res, next) => {
+//     const { email, password } = req.body;
+//     User.create({ email, password }).then((user) => {
+//       passport.authenticate('local', (err, user, info) => {
+//         if (err) { return next(err); }
+//         if (!user) { return res.redirect('/'); }
+//         req.logIn(user, (err) => {
+//           if (err) { return next(err); }
+//           return res.redirect('/secret');
+//         });
+//       })(req, res, next);
+//     });
+//   });
 
 userRoutes.route('/login')
 .post((req, res, next) => {
   const { email, password } = req.body;
   User.find({ email, password }).then((user) => {
+    //whats wrong with this code?
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err); }
       if (!user) { return res.redirect('/'); }
@@ -33,6 +34,13 @@ userRoutes.route('/login')
     })(req, res, next);
   });
 });
+
+// --- this doesnt work either
+// userRoutes.route('/login')
+// .post(passport.authenticate('local', {
+//   successRedirect: '/user/secret',
+//   failureRedirect: '/',
+// }));
 
 userRoutes.route('/secret')
   .get((req, res) => {
