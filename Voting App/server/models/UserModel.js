@@ -11,10 +11,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minlength: 6,
-    required: true,
+    // required: true,
   },
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email', passwordField: 'password' });
 
 module.exports = mongoose.model('User', userSchema);

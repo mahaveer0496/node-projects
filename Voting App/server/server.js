@@ -29,13 +29,23 @@ app.use(require('cors')());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+}));
+// passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use((req, res, next) => {
+  console.log(req.user);
+  next();
+});
+app.get('/', (req, res) => {
+  res.send('this is the root path ');
+});
 
-
-app.use('/api', apiRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api', apiRoutes);
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

@@ -4,10 +4,6 @@ const Poll = require('./../models/PollModel');
 const apiRoutes = express.Router();
 
 apiRoutes.route('/')
-  .all((req, res, next) => {
-    console.log(req.body);
-    next();
-  })
   .get((req, res) => {
     Poll.find({}).then((data) => {
       res.send(data);
@@ -17,7 +13,7 @@ apiRoutes.route('/')
     const { pollTitle } = req.body;
     Poll.create({
       poll: pollTitle,
-    }).then(res.redirect('/'));
+    }).then(res.redirect('/api'));
   });
 
 
