@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -14,5 +13,5 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
-userSchema.methods.validPassword = pwd => (this.password === pwd);
+
 module.exports = mongoose.model('User', userSchema);

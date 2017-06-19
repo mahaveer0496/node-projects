@@ -8,11 +8,12 @@ userRoutes.route('/register')
   .post((req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) return next(err);
-      if (!user) return res.redirect('/');
-      req.logIn(user, (err) => {
-        if (err) { return next(err); }
+      if (!user) return res.send(info);
+      req.logIn(user, (error) => {
+        if (err) { return next(error); }
         return res.redirect('/secret');
       });
+      return res.status(402);
     })(req, res, next);
   });
 
@@ -24,8 +25,8 @@ userRoutes.route('/login')
     // console.log(user);
     if (err) return res.send(err);
     if (!user) return res.send(info);
-    req.logIn(user, (err) => {
-      if (err) return res.send(err);
+    req.logIn(user, (error) => {
+      if (err) return res.send(error);
       return res.redirect('/user/secret');
     });
   })(req, res, next);

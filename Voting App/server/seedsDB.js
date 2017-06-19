@@ -32,7 +32,7 @@ const users = [{
   password: 'password',
 }];
 
-module.exports = function () {
+module.exports = () => {
   Poll.remove({}).then(() => {
     polls.map((poll) => {
       Poll.create(poll);
