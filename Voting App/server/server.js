@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 
 const seedDB = require('./seedsDB');
 const apiRoutes = require('./routes/apiRoutes');
@@ -30,16 +30,17 @@ app.use(require('cors')());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy({
+passport.use('local-login', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, (email, password, done) => {
+  // console.log(email, password);
   User.findOne({ email }).then((user) => {
     // console.log(user);
-    if (!user) { return done(null, false, { message: 'Incorrect username' }); }
-    if (!user.validPassword(password)) { return done(null, false, { message: 'Incorrect password' }); }
+    if (!user) { return done(null, false); }
+    if (!user.validPassword(password)) { return done(null, false); }
     return done(null, user);
-  }, (err) => { console.log(err); done(err); });
+  });
 }));
 
 passport.serializeUser((user, done) => {
