@@ -34,13 +34,22 @@ passport.use('local-login', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, (email, password, done) => {
-  // console.log(email, password);
   User.findOne({ email }).then((user) => {
-    // console.log(user);
-    if (!user) { return done(null, false); }
-    if (!user.validPassword(password)) { return done(null, false); }
+    if (!user) { return done(null, false, { message: 'wrong username' }); }
+    if (user.password !== password) { return done(null, false, { message: 'wrong password' }); }
     return done(null, user);
-  });
+  }, err => done(err));
+}));
+
+passport.use('local-register', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+}, (email, password, done) => {
+  User.create({ email, password }).then((user) => {
+    if (!user) { return done(null, false, { message: 'user already exists' }); }
+
+    return done(null, user);
+  }, err => done(err));
 }));
 
 passport.serializeUser((user, done) => {

@@ -4,29 +4,38 @@ const User = require('./../models/UserModel');
 
 const userRoutes = express.Router();
 
-// userRoutes.route('/register')
-//   .post((req, res, next) => {
-//     const { email, password } = req.body;
-//     User.create({ email, password }).then((user) => {
-//       passport.authenticate('local', (err, user, info) => {
-//         if (err) { return next(err); }
-//         if (!user) { return res.redirect('/'); }
-//         req.logIn(user, (err) => {
-//           if (err) { return next(err); }
-//           return res.redirect('/secret');
-//         });
-//       })(req, res, next);
-//     });
-//   });
+userRoutes.route('/register')
+  .post((req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) return next(err);
+      if (!user) return res.redirect('/');
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        return res.redirect('/secret');
+      });
+    })(req, res, next);
+  });
+
 
 userRoutes.route('/login')
-.post(passport.authenticate('local-login', {
-  successRedirect: '/user/secret',
-  failureRedirect: '/',
-}));
+.get((req, res) => { res.send('back again?'); })
+.post((req, res, next) => {
+  passport.authenticate('local-login', (err, user, info) => {
+    // console.log(user);
+    if (err) return res.send(err);
+    if (!user) return res.send(info);
+    req.logIn(user, (err) => {
+      if (err) return res.send(err);
+      return res.redirect('/user/secret');
+    });
+  })(req, res, next);
+});
 
 userRoutes.route('/secret')
-  .get((req, res) => {
+  .get((req, res, next) => {
+    if (req.isAuthenticated()) return next();
+    return res.redirect('/user/login');
+  }, (req, res) => {
     res.send('shhhh! this is secret page');
   });
 
