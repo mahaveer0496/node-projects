@@ -5,10 +5,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const seedDB = require('./seedsDB');
-const User = require('./models/UserModel');
 const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 const config = require('./config');
+
+const User = require('./models/UserModel');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,28 +25,38 @@ mongoose.connect(config.mongo);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/dist`));
-// seedDB();
+seedDB();
 app.use(require('cors')());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(User.createStrategy({
+passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
+}, (email, password, done) => {
+  User.findOne({ email }).then((user) => {
+    // console.log(user);
+    if (!user) { return done(null, false, { message: 'Incorrect username' }); }
+    if (!user.validPassword(password)) { return done(null, false, { message: 'Incorrect password' }); }
+    return done(null, user);
+  }, (err) => { console.log(err); done(err); });
 }));
-// passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-app.use((req, res, next) => {
-  console.log(req.user);
-  next();
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user);
+  }, err => done(err));
+});
+
 app.get('/', (req, res) => {
   res.send('this is the root path ');
 });
 
-app.use('/api/user', userRoutes);
-app.use('/api', apiRoutes);
+app.use('/user', userRoutes);
+// app.use('/api', apiRoutes);
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

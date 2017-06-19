@@ -1,4 +1,5 @@
 const Poll = require('./models/PollModel');
+const User = require('./models/UserModel');
 
 const polls = [{
   poll: 'this is first poll',
@@ -20,10 +21,27 @@ const polls = [{
   }],
 }];
 
+const users = [{
+  email: 'email1@email.com',
+  password: 'password',
+}, {
+  email: 'email2@email.com',
+  password: 'password',
+}, {
+  email: 'email3@email.com',
+  password: 'password',
+}];
+
 module.exports = function () {
   Poll.remove({}).then(() => {
     polls.map((poll) => {
       Poll.create(poll);
+    });
+  });
+
+  User.remove({}).then(() => {
+    users.map((user) => {
+      User.create(user);
     });
   });
 };

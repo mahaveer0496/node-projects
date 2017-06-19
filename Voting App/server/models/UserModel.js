@@ -10,11 +10,9 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    minlength: 6,
-    // required: true,
+    minlength: 5,
+    required: true,
   },
 });
-
-userSchema.plugin(passportLocalMongoose, { usernameField: 'email', passwordField: 'password' });
-
+userSchema.methods.validPassword = pwd => (this.password === pwd);
 module.exports = mongoose.model('User', userSchema);
