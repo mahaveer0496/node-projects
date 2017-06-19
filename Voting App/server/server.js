@@ -14,10 +14,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const seedDB = require('./seedsDB');
-  // seedDB();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongo);
+seedDB();
 
 appConfig(app);
 passportConfig(passport);

@@ -6,12 +6,12 @@ const userRoutes = express.Router();
 
 userRoutes.route('/register')
   .post((req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate('local-register', (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.send(info);
       req.logIn(user, (error) => {
         if (err) { return next(error); }
-        return res.redirect('/secret');
+        return res.send(user);
       });
       return res.status(402);
     })(req, res, next);
