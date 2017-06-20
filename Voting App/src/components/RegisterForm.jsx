@@ -2,21 +2,29 @@ import React from 'react';
 import axios from 'axios';
 
 const RegisterForm = () => {
-  const submitHandler = () => {
-
+  let email = null;
+  let password = null;
+  const submitHandler = (event) => {
+    event.preventDefault();
+    // console.log(email.value, password.value);
+    // console.log(history);
+    axios.post('http://localhost:3000/user/register', {
+      email: email.value,
+      password: password.value,
+    }).then((res) => { console.log(res.data); });
   };
   return (
-    <form className="container">
+    <form className="container" onSubmit={submitHandler}>
       <div className="row justify-content-center">
         <div className="col-sm-10 col-md-7">
           <div className="form-group">
             <small id="helpId" className="text-muted">Enter your email</small>
-            <input type="text" name="email" className="form-control" aria-describedby="helpId" />
+            <input type="text" className="form-control" ref={input => email = input} />
           </div>
 
           <div className="form-group">
             <small id="helpId" className="text-muted">Enter your password</small>
-            <input type="text" name="email" className="form-control" aria-describedby="helpId" />
+            <input type="text" className="form-control" ref={input => password = input} />
           </div>
 
           <div className="form-group">

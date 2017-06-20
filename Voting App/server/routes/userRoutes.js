@@ -11,7 +11,7 @@ userRoutes.route('/register')
       if (!user) return res.send(info);
       req.logIn(user, (error) => {
         if (err) { return next(error); }
-        return res.send(user);
+        return res.redirect('/user/secret');
       });
       return res.status(402);
     })(req, res, next);
@@ -19,7 +19,6 @@ userRoutes.route('/register')
 
 
 userRoutes.route('/login')
-.get((req, res) => { res.send('couldnt login'); })
 .post((req, res, next) => {
   passport.authenticate('local-login', (err, user, info) => {
     // console.log(user);
@@ -35,7 +34,7 @@ userRoutes.route('/login')
 userRoutes.route('/secret')
   .get((req, res, next) => {
     if (req.isAuthenticated()) return next();
-    return res.redirect('/user/login');
+    return res.send('couldnt login');
   }, (req, res) => {
     res.send('shhhh! this is secret page');
   });
