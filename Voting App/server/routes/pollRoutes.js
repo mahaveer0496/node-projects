@@ -1,9 +1,9 @@
 const express = require('express');
 const Poll = require('./../models/PollModel');
 
-const apiRoutes = express.Router();
+const pollRoutes = express.Router();
 
-apiRoutes.route('/')
+pollRoutes.route('/')
   .get((req, res) => {
     Poll.find({}).then((data) => {
       res.send(data);
@@ -17,7 +17,7 @@ apiRoutes.route('/')
   });
 
 
-apiRoutes.route('/:pollId')
+pollRoutes.route('/:pollId')
   .get((req, res) => {
     const { pollId } = req.params;
     Poll.findById(pollId).then((poll) => {
@@ -37,7 +37,7 @@ apiRoutes.route('/:pollId')
     });
   });
 
-apiRoutes.route('/:pollId/:topicId')
+pollRoutes.route('/:pollId/:topicId')
   .post((req, res) => {
     const { pollId, topicId } = req.params;
     // res.send({ pollId, topicId });
@@ -53,4 +53,4 @@ apiRoutes.route('/:pollId/:topicId')
     });
   });
 
-module.exports = apiRoutes;
+module.exports = pollRoutes;

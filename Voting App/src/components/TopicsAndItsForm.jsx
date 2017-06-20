@@ -9,7 +9,7 @@ class TopicsAndItsForms extends Component {
     this.state = {
       topics: [],
     };
-    axios.get(`http://localhost:3000/api/${this.props.match.params.pollId}`).then((res) => {
+    axios.get(`http://localhost:3000/poll/${this.props.match.params.pollId}`).then((res) => {
       // console.log(res.data.poll);
       this.setState({
         topics: res.data.topics,
@@ -21,7 +21,7 @@ class TopicsAndItsForms extends Component {
 
   increaseVotes(pollId, topicId) {
     // console.log(pollId, topicId);
-    axios.post(`http://localhost:3000/api/${pollId}/${topicId}`).then((res) => {
+    axios.post(`http://localhost:3000/poll/${pollId}/${topicId}`).then((res) => {
       console.log(JSON.stringify(res.data, null, 2));
       this.setState({
         topics: res.data.topics,
@@ -30,7 +30,7 @@ class TopicsAndItsForms extends Component {
   }
 
   addNewTopic(pollId, topicTitle) {
-    axios.post(`http://localhost:3000/api/${pollId}`, {
+    axios.post(`http://localhost:3000/poll/${pollId}`, {
       title: topicTitle,
     }).then((res) => {
       this.setState({

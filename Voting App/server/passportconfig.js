@@ -9,11 +9,12 @@ module.exports = (passport) => {
     passwordField: 'password',
   }, (email, password, done) => {
     User.findOne({ email }).then((user) => {
-      if (!user) return done(null, false, { message: 'wrong username' });
+      if (!user) return done(null, false, { message: 'wrong email' });
       bcrypt.compare(password, user.password, (err, res) => {
+        console.log(res);
         if (err) return done(err);
-        if (!res) return done(null, false, { message: 'wrong password ' });
-        if (res) return done(null, user);
+        if (!res) return done(null, false, { message: 'wrong password' });
+        return done(null, user);
       });
     }, err => done(err));
   }));
@@ -22,8 +23,7 @@ module.exports = (passport) => {
     usernameField: 'email',
     passwordField: 'password',
   }, (email, password, done) => {
-    bcrypt.hash(password, 10, (err, hash) => {
-      console.log(hash);
+    bcrypt.hash(password, 10, (err, hash) => {   
       User.create({ email, password: hash }).then((user) => {
         if (!user) return done(null, false, { message: 'user already exists' });
         return done(null, user);

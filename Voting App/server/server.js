@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 // routes---
-const apiRoutes = require('./routes/apiRoutes');
+const pollRoutes = require('./routes/pollRoutes');
 const userRoutes = require('./routes/userRoutes');
 // config----
 const config = require('./config');
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', userRoutes);
-app.use('/api', apiRoutes);
+app.use('/poll', pollRoutes);
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

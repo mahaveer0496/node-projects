@@ -19,7 +19,7 @@ userRoutes.route('/register')
 
 
 userRoutes.route('/login')
-.get((req, res) => { res.send('back again?'); })
+.get((req, res) => { res.send('couldnt login'); })
 .post((req, res, next) => {
   passport.authenticate('local-login', (err, user, info) => {
     // console.log(user);
