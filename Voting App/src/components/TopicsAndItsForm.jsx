@@ -30,7 +30,7 @@ class TopicsAndItsForms extends Component {
   }
 
   addNewTopic(pollId, topicTitle) {
-    axios.post(`http://localhost:3000/poll/${pollId}`, {
+    axios.post(`http://localhost:3000/api/poll/${pollId}`, {
       title: topicTitle,
     }).then((res) => {
       this.setState({

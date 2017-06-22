@@ -2,12 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-const Secret = ({ history, handleAuth }) => {
+const Secret = ({ history }) => {
   const logoutHandler = () => {
-    axios.get('http://localhost:3000/user/logout')
+    axios.get('http://localhost:3000/api/user/logout')
       .then((res) => {
         console.log(res.data);
-        handleAuth();
         history.push('/');
       });
   };

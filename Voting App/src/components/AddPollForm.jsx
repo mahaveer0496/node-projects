@@ -5,7 +5,7 @@ const AddPollForm = ({ handleUpdate }) => {
   let pollTitle = null;
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3000/poll', {
+    axios.post('http://localhost:3000/api/poll', {
       pollTitle: pollTitle.value,
     }).then((res) => {
       handleUpdate(res.data);

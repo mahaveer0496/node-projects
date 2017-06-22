@@ -26,8 +26,8 @@ app.get('/', (req, res) => {
   res.send('this is the root path ');
 });
 
-app.use('/user', userRoutes);
-app.use('/poll', pollRoutes);
+app.use('api/user', userRoutes);
+app.use('api/poll', pollRoutes);
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}`);

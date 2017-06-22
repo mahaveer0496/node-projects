@@ -6,7 +6,7 @@ const RegisterForm = () => {
   let password = null;
   const submitHandler = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3000/user/register', {
+    axios.post('http://localhost:3000/api/user/register', {
       email: email.value,
       password: password.value,
     }).then((res) => {

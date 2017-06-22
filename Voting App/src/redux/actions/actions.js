@@ -1,24 +1,24 @@
-import fetchJsonp from 'fetch-jsonp';
-import {
-  FETCHING,
-  COMPLETE_FETCH
-} from './actionTypes';
+import axios from 'axios';
+import { AUTHORIZING_USER, AUTHORIZING_SUCCESS, AUTHORIZING_FAIL } from './actionTypes';
 
-export const fetching = () => ({
-  type: FETCHING,
+export const authorizeUser = () => ({
+  type: AUTHORIZING_USER,
 });
 
-export const completeFetch = data => ({
-  type: COMPLETE_FETCH,
-  data,
+export const authorizeSuccess = email => ({
+  type: AUTHORIZING_SUCCESS,
+  email,
 });
 
-export const fetchData = (searchText) => (dispatch, getState) => {
-  dispatch(fetching());
-  fetchJsonp(`https://en.wikipedia.org/w/api.php?action=opensearch&limit=24&format=json&search=${searchText}&callback=?`).then((res) => {
-    // console.log(res);
-    res.json().then((data) => {
-      dispatch(completeFetch(data));
-    });
+export const authorizeFail = () => ({
+  type: AUTHORIZING_FAIL,
+});
+
+export const getUser = () => (dispatch, getState) => {
+  dispatch(authorizeUser());
+  axios.get('http://localhost:3000/api/user/checkAuth').then((res) => {
+    console.log(res.data);
+    if (res.data.email) dispatch(authorizeSuccess(res.data.email));
+    dispatch(authorizeFail());
   });
 };

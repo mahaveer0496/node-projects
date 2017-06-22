@@ -9,7 +9,7 @@ class PollAndItsForm extends Component {
     this.state = {
       polls: [],
     };
-    axios.get('http://localhost:3000/poll').then((res) => {
+    axios.get('http://localhost:3000/api/poll').then((res) => {
       this.setState({
         polls: res.data,
       });

@@ -6,7 +6,8 @@ const userRoutes = express.Router();
 
 userRoutes.route('/checkAuth')
   .get((req, res) => {
-    res.send(req.isAuthenticated());
+    if (req.user) return res.json({ email: req.user.email });
+    return res.json({ email: '' });
   });
 
 userRoutes.route('/register')

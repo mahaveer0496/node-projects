@@ -2,18 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter, Redirect } from 'react-router-dom';
 
-const LoginForm = ({ history, handleAuth }) => {
+const LoginForm = ({ history }) => {
   let email = null;
   let password = null;
   const submitHandler = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3000/user/login', {
+    axios.post('http://localhost:3000/api/user/login', {
       email: email.value,
       password: password.value,
     }).then((res) => {
       console.log(res.status);
       if (res.status === 200) {
-        handleAuth();
         history.replace('/secret');
       } else {
         history.replace('/');

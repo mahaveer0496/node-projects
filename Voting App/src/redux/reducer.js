@@ -1,23 +1,35 @@
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
-import { FETCHING, COMPLETE_FETCH } from './actions/actionTypes';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { AUTHORIZING_USER, AUTHORIZING_FAIL, AUTHORIZING_SUCCESS } from './actions/actionTypes';
 
 
 const initialState = {
-  fetching: false,
-  data: ['', [], [], []],
+  fetchingUser: false,
+  isAuthenticated: false,
+  email: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCHING:
-      return Object.assign({}, state, { fetching: true });
-
-    case COMPLETE_FETCH:
+    case AUTHORIZING_USER:
       return Object.assign({}, state, {
-        fetching: false,
-        data: action.data,
+        fetchingUser: true,
+        isAuthenticated: false,
+      });
+
+    case AUTHORIZING_SUCCESS:
+      return Object.assign({}, state, {
+        fetchingUser: false,
+        isAuthenticated: true,
+        email: action.email,
+      });
+
+    case AUTHORIZING_FAIL:
+      return Object.assign({}, state, {
+        fetchingUser: false,
+        isAuthenticated: false,
+        email: '',
       });
 
     default:
