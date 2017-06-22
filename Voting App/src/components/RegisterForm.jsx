@@ -6,12 +6,12 @@ const RegisterForm = () => {
   let password = null;
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log(email.value, password.value);
-    // console.log(history);
     axios.post('http://localhost:3000/user/register', {
       email: email.value,
       password: password.value,
-    }).then((res) => { console.log(res.data); });
+    }).then((res) => {
+      console.log(res.status);
+    });
   };
   return (
     <form className="container" onSubmit={submitHandler}>

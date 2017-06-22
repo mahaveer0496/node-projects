@@ -9,25 +9,24 @@ module.exports = (passport) => {
     passwordField: 'password',
   }, (email, password, done) => {
     User.findOne({ email }).then((user) => {
-      if (!user) return done(null, false, { message: 'wrong email' });
+      if (!user) return done(null, false, { message: 'Wrong email' });
       bcrypt.compare(password, user.password, (err, res) => {
-        console.log(res);
         if (err) return done(err);
         if (!res) return done(null, false, { message: 'wrong password' });
-        return done(null, user);
+        return done(null, user, { message: 'Login success' });
       });
-    }, err => done(err));
+    })
+    .catch(err => done(err));
   }));
 
   passport.use('local-register', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
   }, (email, password, done) => {
-    bcrypt.hash(password, 10, (err, hash) => {   
-      User.create({ email, password: hash }).then((user) => {
-        if (!user) return done(null, false, { message: 'user already exists' });
-        return done(null, user);
-      }, err => done(err));
+    bcrypt.hash(password, 10, (err, hash) => {
+      User.create({ email, password: hash })
+      .then(user => done(null, user, { message: 'Registration success' }))
+      .catch(err => done(null, false, { message: 'User already exists' }));
     });
   }));
 

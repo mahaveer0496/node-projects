@@ -17,7 +17,7 @@ const seedDB = require('./seedsDB');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongo);
-seedDB();
+// seedDB();
 
 appConfig(app);
 passportConfig(passport);

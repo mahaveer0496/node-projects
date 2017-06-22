@@ -4,6 +4,11 @@ const User = require('./../models/UserModel');
 
 const userRoutes = express.Router();
 
+userRoutes.route('/checkAuth')
+  .get((req, res) => {
+    res.send(req.isAuthenticated());
+  });
+
 userRoutes.route('/register')
   .post((req, res, next) => {
     passport.authenticate('local-register', (err, user, info) => {
@@ -11,9 +16,8 @@ userRoutes.route('/register')
       if (!user) return res.send(info);
       req.logIn(user, (error) => {
         if (err) { return next(error); }
-        return res.redirect('/user/secret');
+        return res.status(200).send(info);
       });
-      return res.status(402);
     })(req, res, next);
   });
 
@@ -26,7 +30,7 @@ userRoutes.route('/login')
     if (!user) return res.send(info);
     req.logIn(user, (error) => {
       if (err) return res.send(error);
-      return res.redirect('/user/secret');
+      return res.status(200).send(info);
     });
   })(req, res, next);
 });
@@ -34,7 +38,7 @@ userRoutes.route('/login')
 userRoutes.route('/secret')
   .get((req, res, next) => {
     if (req.isAuthenticated()) return next();
-    return res.send('couldnt login');
+    return res.send('unauthenticated');
   }, (req, res) => {
     res.send('shhhh! this is secret page');
   });

@@ -1,17 +1,22 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
-const LoginForm = ({ history }) => {
+const LoginForm = ({ history, handleAuth }) => {
   let email = null;
   let password = null;
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log(email.value, password.value);
-    // console.log(history);
     axios.post('http://localhost:3000/user/login', {
       email: email.value,
       password: password.value,
-    }).then((res) => { console.log(res.data); });
+    }).then((res) => {
+      console.log(res.status);
+      if (res.status === 200) {
+        handleAuth();
+        history.replace('/secret');
+      }
+    });
   };
   return (
     <form method="POST" className="container" onSubmit={submitHandler}>
@@ -36,4 +41,4 @@ const LoginForm = ({ history }) => {
   );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
