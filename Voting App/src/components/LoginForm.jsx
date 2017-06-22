@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 const LoginForm = ({ history, handleAuth }) => {
   let email = null;
@@ -15,6 +15,8 @@ const LoginForm = ({ history, handleAuth }) => {
       if (res.status === 200) {
         handleAuth();
         history.replace('/secret');
+      } else {
+        history.replace('/');
       }
     });
   };

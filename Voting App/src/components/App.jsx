@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import PollAndItsForm from './PollAndItsForm';
 import TopicsAndItsForm from './TopicsAndItsForm';
@@ -18,6 +18,7 @@ class App extends Component {
   }
   handleAuth() {
     axios.get('/user/checkAuth').then((res) => {
+      console.log(`res ${res.data}`);
       this.setState({
         isAuthenticated: res.data,
       });
@@ -30,6 +31,7 @@ class App extends Component {
         <Navigation />
         <Switch>
           <Route exact path="/" component={PollAndItsForm} />
+          <Route path="/poll/:pollId" component={TopicsAndItsForm} />
           <Route
             path="/login"
             render={() => <LoginForm handleAuth={this.handleAuth} />}
@@ -41,11 +43,10 @@ class App extends Component {
           <Route
             path="/secret"
             render={() => {
-              if (isAuthenticated) return <Secret />;
-              return <h1>Unauthenticated</h1>;
+              if (isAuthenticated) return <Secret handleAuth={this.handleAuth} />;
+              return <Redirect to="/login" />;
             }}
           />
-          <Route path="/poll/:pollId" component={TopicsAndItsForm} />
         </Switch>
       </div>
     );
